@@ -1,0 +1,114 @@
+{
+  "name": "@ntnc/kk-status",
+  "displayName": "KKステータス",
+  "description": "(description)",
+  "version": "1.0",
+  "author": {
+    "name": "nataniachan (hpgbproductions)",
+    "url": "https://x.com/hpgbproductions"
+  },
+  "contributors": [
+    {
+      "name": "",
+      "url": "https://hpgbproductions.fanbox.cc"
+    }
+  ],
+  "kumohaConfig": {
+    "configuration": {
+      "categories": {
+        "example": {
+          "label": "サンプル設定"
+        },
+        "example.hito": {
+          "label": "例の１"
+        },
+        "example.futa": {
+          "label": "例の２"
+        }
+      },
+      "properties": {
+        "example.hito.ichi": {
+          "type": "string",
+          "label": "設定1",
+          "description": "メニューから選択してください",
+          "default": "niban",
+          "enum": [
+            "ichiban",
+            "niban",
+            "sanban"
+          ],
+          "enumLabels": [
+            "一番",
+            "二番",
+            "三番"
+          ]
+        },
+        "example.hito.ni": {
+          "type": "string",
+          "label": "設定2",
+          "description": "好きな動物を選択してください",
+          "default": "tanuki1",
+          "enum": [
+            "tanuki1",
+            "tanuki2",
+            "tanuki3",
+            "tanuki-only"
+          ],
+          "enumLabels": [
+            "タヌキ",
+            "たぬき",
+            "狸",
+            "たぬきがすきですよね？タ・ヌ・キだけ"
+          ]
+        },
+        "example.futa.ichi": {
+          "type": "boolean",
+          "label": "設定3",
+          "default": false
+        }
+      }
+    },
+    "preview": [
+      "preview/base-theme.png"
+    ]
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "tanuden-desktop-hakata": "^4.2.0"
+  },
+  "scripts": {
+    "dev": "vite --host --port 5800",
+    "build": "rimraf dist && tsc -b && vite build",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.6",
+    "@tanuden/kumoha": "^0.4.1",
+    "@tanuden/kumoha-react": "^0.4.2",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "react-router-dom": "^7.10.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react-swc": "^4.2.2",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "opentetsu": "^0.0.9",
+    "rimraf": "^6.1.2",
+    "rollup-plugin-copy": "^3.5.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.49.0",
+    "vite": "^7.2.7",
+    "vite-plugin-zip-pack": "^1.2.4"
+  }
+}
