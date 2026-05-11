@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-render */
 import { useMemo, useState } from "react";
 import { KumohaState } from "@tanuden/kumoha";
 import { Stack, Typography } from "@mui/material";
@@ -28,7 +29,13 @@ export const BootSplash = ({ state }: { state: KumohaState }) => {
 
   return (
     <PageContainer>
-      <Stack flexGrow={1} alignItems="center" justifyContent="center">
+      <Stack
+        sx={{
+          flexGrow: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Stack spacing={2}>
           <Stack
             spacing={1.5}
@@ -36,26 +43,28 @@ export const BootSplash = ({ state }: { state: KumohaState }) => {
               visibility: !isErrored ? "visible" : "hidden",
             }}
           >
-            <Typography color="grey.400" fontSize="2rem">
+            <Typography color="grey.400" sx={{ fontSize: "2rem" }}>
               たったいま準備中です。
             </Typography>
-            <Typography color="grey.400" fontSize="2rem">
+            <Typography color="grey.400" sx={{ fontSize: "2rem" }}>
               しばらくお待ちください。
             </Typography>
           </Stack>
         </Stack>
       </Stack>
       <Stack
-        alignItems="center"
-        justifyContent="center"
-        position="absolute"
-        bottom="5%"
-        left={0}
-        right={0}
+        sx={{
+          alignItems: "center",
+          justifyContent: "center",
+          position: "absolute",
+          bottom: "5%",
+          left: 0,
+          right: 0,
+        }}
       >
         <Typography
           color={isErrored ? "error" : "common.white"}
-          fontSize="1.8rem"
+          sx={{ fontSize: "1.8rem" }}
         >
           {stateHumanReadable}
         </Typography>

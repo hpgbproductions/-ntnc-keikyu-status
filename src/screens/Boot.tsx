@@ -41,6 +41,7 @@ export const Boot = ({
       });
     }
     if (state === "auth-error") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPromptCode(true);
     }
 

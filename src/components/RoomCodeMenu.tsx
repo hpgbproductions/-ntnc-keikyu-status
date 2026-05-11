@@ -1,4 +1,4 @@
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+﻿import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { useGlobalStore } from "../stores";
 import { FormEvent, useRef, useState } from "react";
 import { useKumoha } from "@tanuden/kumoha-react";
@@ -52,8 +52,21 @@ export const RoomCodeMenu = ({
 
   return (
     <MainLayout>
-      <Stack flexGrow={1} alignItems="center" justifyContent="center">
-        <Stack width="100%" maxWidth="sm" p={2} spacing={4}>
+      <Stack
+        sx={{
+          flexGrow: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Stack
+          sx={{
+            width: "100%",
+            maxWidth: "sm",
+            p: 2,
+          }}
+          spacing={4}
+        >
           <Stack spacing={2}>
             <Typography variant="h2" align="center">
               接続設定再入力が必要です
@@ -69,7 +82,7 @@ export const RoomCodeMenu = ({
             component="form"
             onSubmit={handleSubmit}
           >
-            <Box flexGrow={1}>
+            <Box sx={{ flexGrow: 1 }}>
               <TextField
                 // label='ログイン入力'
                 placeholder="••••••"
@@ -100,7 +113,7 @@ export const RoomCodeMenu = ({
                 }}
               />
             </Box>
-            <Box width="20%">
+            <Box sx={{ width: "20%" }}>
               <Button
                 sx={{
                   width: "100%",
