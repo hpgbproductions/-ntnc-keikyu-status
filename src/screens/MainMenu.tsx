@@ -6,11 +6,41 @@ import {
 import PageContainer from "../components/PageContainer";
 import { Paper, Stack } from "@mui/material";
 import { StatusLamp } from "../components/StatusLamp";
+import { useState } from "react";
+
+import { getDefaultIndicatorValues, updateIndicatorValues } from "../components/IndicatorValues";
+
+function setNotchHistoryArray(setFunction: React.Dispatch<React.SetStateAction<number[]>>, val: number[]) {
+    setFunction(structuredClone(val));
+}
+
+function setTrainHistoryArray(setFunction: React.Dispatch<React.SetStateAction<number[][]>>, val: number[][]) {
+    setFunction(structuredClone(val));
+}
 
 export const MainMenu = () => {
   const kumohaData = useKumohaData();
   const kumohaUserPrefs = useKumohaThemeUserPrefs();
   const kumohaROM = useKumohaROM();
+
+  const defaultPrevCurrents = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
+  const defaultPrevBCs = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
+  const defaultPrevPower = [0, 0, 0];
+  const defaultPrevBrake = [0, 0, 0];
+
+  const [prevCurrents, setPrevCurrents] = useState(defaultPrevCurrents);
+  const [prevBCs, setPrevBCs] = useState(defaultPrevBCs);
+  const [prevPower, setPrevPower] = useState(defaultPrevPower);
+  const [prevBrake, setPrevBrake] = useState(defaultPrevBrake);
+
+  const [indicators, setIndicators] = useState(getDefaultIndicatorValues());
+
+  // TO FIX: this function kills the app when the diagram is entered
+  const newIndicators = updateIndicatorValues(prevCurrents, prevBCs, prevPower, prevBrake);
+  if (newIndicators != null)
+  {
+    setIndicators(structuredClone(newIndicators));
+  }
 
   return (
     <PageContainer>
@@ -75,6 +105,9 @@ export const MainMenu = () => {
           />
         </Stack>
       </Stack>
+      <h2>
+        {JSON.stringify(indicators, undefined, 2)}
+      </h2>
     </PageContainer>
   );
 };

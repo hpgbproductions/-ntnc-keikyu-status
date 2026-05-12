@@ -1,5 +1,5 @@
 {
-  "name": "@ntnc/kk-status",
+  "name": "@hpgbproductions/kk-status",
   "displayName": "KKステータス",
   "description": "(description)",
   "version": "1.0",
@@ -9,8 +9,8 @@
   },
   "contributors": [
     {
-      "name": "",
-      "url": "https://hpgbproductions.fanbox.cc"
+      "name": "狸治ハルユキ",
+      "url": "https://go.tanu.ch/twitter"
     }
   ],
   "kumohaConfig": {
