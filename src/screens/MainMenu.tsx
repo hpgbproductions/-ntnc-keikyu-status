@@ -6,41 +6,77 @@ import {
 import PageContainer from "../components/PageContainer";
 import { Paper, Stack } from "@mui/material";
 import { StatusLamp } from "../components/StatusLamp";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { getDefaultIndicatorValues, updateIndicatorValues } from "../components/IndicatorValues";
+import {
+  getDefaultIndicatorValues,
+  updateIndicatorValues,
+} from "../utils/indicator-values";
 
-function setNotchHistoryArray(setFunction: React.Dispatch<React.SetStateAction<number[]>>, val: number[]) {
-    setFunction(structuredClone(val));
-}
-
-function setTrainHistoryArray(setFunction: React.Dispatch<React.SetStateAction<number[][]>>, val: number[][]) {
-    setFunction(structuredClone(val));
-}
+export type CarHistoryRecord = {
+  bc: number[];
+  current: number[];
+  pNotch: number;
+  bNotch: number;
+};
+export type CarHistory = CarHistoryRecord[];
 
 export const MainMenu = () => {
   const kumohaData = useKumohaData();
   const kumohaUserPrefs = useKumohaThemeUserPrefs();
   const kumohaROM = useKumohaROM();
 
-  const defaultPrevCurrents = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
-  const defaultPrevBCs = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
-  const defaultPrevPower = [0, 0, 0];
-  const defaultPrevBrake = [0, 0, 0];
+  const [carHistory, setCarHistory] = useState<CarHistory>([]);
 
-  const [prevCurrents, setPrevCurrents] = useState(defaultPrevCurrents);
-  const [prevBCs, setPrevBCs] = useState(defaultPrevBCs);
-  const [prevPower, setPrevPower] = useState(defaultPrevPower);
-  const [prevBrake, setPrevBrake] = useState(defaultPrevBrake);
+  const indicators = useMemo(() => {
+    const inGame =
+      kumohaData.gameState.screen === "MainGame" ||
+      kumohaData.gameState.screen === "MainGame_Pause";
 
-  const [indicators, setIndicators] = useState(getDefaultIndicatorValues());
+    if (!inGame) {
+      return getDefaultIndicatorValues();
+    }
 
-  // TO FIX: this function kills the app when the diagram is entered
-  const newIndicators = updateIndicatorValues(prevCurrents, prevBCs, prevPower, prevBrake);
-  if (newIndicators)
-  {
-    setIndicators(newIndicators);
-  }
+    return (
+      updateIndicatorValues({
+        history: carHistory,
+        direction: kumohaData.gameData.diagram.direction,
+        cars: kumohaData.gameData.train.cars,
+        pNotch: kumohaData.gameData.controllerState.pNotch,
+        bNotch: kumohaData.gameData.controllerState.bNotch,
+        combinedNotch: kumohaData.gameData.controllerState.notch,
+        switches: kumohaData.gameData.train.switches,
+        lamps: kumohaData.gameData.train.lamps,
+      }) || getDefaultIndicatorValues()
+    );
+  }, [
+    kumohaData.gameState.screen,
+    kumohaData.gameData.diagram.direction,
+    kumohaData.gameData.train.cars,
+    kumohaData.gameData.train.switches,
+    kumohaData.gameData.train.lamps,
+    kumohaData.gameData.controllerState.pNotch,
+    kumohaData.gameData.controllerState.bNotch,
+    kumohaData.gameData.controllerState.notch,
+    carHistory,
+  ]);
+
+  useEffect(() => {
+    if (kumohaData.gameState.screen !== "MainGame") return;
+
+    const newRecord: CarHistoryRecord = {
+      bc: kumohaData.gameData.train.cars.map((car) => car.bcPressure),
+      current: kumohaData.gameData.train.cars.map((car) => car.amperage),
+      pNotch: kumohaData.gameData.controllerState.pNotch,
+      bNotch: kumohaData.gameData.controllerState.bNotch,
+    };
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCarHistory((prev) => [...prev, newRecord]);
+
+    // Ensure only last 5 records are kept
+    setCarHistory((prev) => prev.slice(-5));
+  }, [kumohaData]);
 
   return (
     <PageContainer>
@@ -105,9 +141,7 @@ export const MainMenu = () => {
           />
         </Stack>
       </Stack>
-      <h2>
-        {JSON.stringify(indicators, undefined, 2)}
-      </h2>
+      <h2>{JSON.stringify(indicators, undefined, 2)}</h2>
     </PageContainer>
   );
 };
