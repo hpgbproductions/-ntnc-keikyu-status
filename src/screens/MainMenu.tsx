@@ -37,9 +37,9 @@ export const MainMenu = () => {
 
   // TO FIX: this function kills the app when the diagram is entered
   const newIndicators = updateIndicatorValues(prevCurrents, prevBCs, prevPower, prevBrake);
-  if (newIndicators != null)
+  if (newIndicators)
   {
-    setIndicators(structuredClone(newIndicators));
+    setIndicators(newIndicators);
   }
 
   return (

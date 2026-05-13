@@ -48,7 +48,7 @@ export function updateIndicatorValues(currents: number[][], BCs: number[][], pow
 
     //#region Check game state
 
-    var inGame = kumohaData.gameState.screen == "MainGame" || kumohaData.gameState.screen == "MainGame_Pause";
+    var inGame = kumohaData.gameState.screen === "MainGame" || kumohaData.gameState.screen === "MainGame_Pause";
     if (!inGame) {
         // Invalid state
         return null;
@@ -58,11 +58,11 @@ export function updateIndicatorValues(currents: number[][], BCs: number[][], pow
 
     //#region Set train parameters and check train
 
-    if (kumohaData.gameData.diagram.direction == "Outbound") {
+    if (kumohaData.gameData.diagram.direction === "Outbound") {
         // Towards Tatehama
         leadCar.number = 1;
     }
-    else if (kumohaData.gameData.diagram.direction == "Inbound"){
+    else if (kumohaData.gameData.diagram.direction === "Inbound"){
         // Away from Tatehama, lead car number is equal to number of cars
         leadCar.number = kumohaData.gameData.train.consist;
     }
