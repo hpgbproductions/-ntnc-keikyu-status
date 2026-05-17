@@ -116,10 +116,10 @@ export function updateIndicatorValues({
 
   if (largeInput && constantInput) {
     // Assume slip if the per-car history fluctuates by these amounts.
-    // Current variation is very small in normal acceleration (<5) but very large in slip.
+    // Current variation is very small in normal acceleration (<5) except for 3000 series.
     // BC variation can be forced large by changing brake amount sharply. E.g., ~233 using EB on 4300/5300 series.
     // Realistically the BC threhold should never be hit due to Tatehama brake programming.
-    const currentVariationThreshold = 100;
+    const currentVariationThreshold = 250;
     const bcVariationThreshold = 250;
 
     for (let car = 0; car < cars.length; car++) {
