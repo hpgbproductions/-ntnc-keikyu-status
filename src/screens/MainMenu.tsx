@@ -1,8 +1,4 @@
-import {
-  useKumohaData,
-  useKumohaROM,
-  useKumohaThemeUserPrefs,
-} from "@tanuden/kumoha-react";
+import { useKumohaData } from "@tanuden/kumoha-react";
 import PageContainer from "../components/PageContainer";
 import { Paper, Stack } from "@mui/material";
 import { StatusLamp } from "../components/StatusLamp";
@@ -23,8 +19,8 @@ export type CarHistory = CarHistoryRecord[];
 
 export const MainMenu = () => {
   const kumohaData = useKumohaData();
-  const kumohaUserPrefs = useKumohaThemeUserPrefs();
-  const kumohaROM = useKumohaROM();
+  // const kumohaUserPrefs = useKumohaThemeUserPrefs();
+  // const kumohaROM = useKumohaROM();
 
   const [carHistory, setCarHistory] = useState<CarHistory>([]);
 
