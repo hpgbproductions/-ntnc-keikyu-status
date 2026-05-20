@@ -1,6 +1,6 @@
 import { useKumohaData } from "@tanuden/kumoha-react";
 import PageContainer from "../components/PageContainer";
-import { Stack, useTheme } from "@mui/material";
+import { Stack } from "@mui/material";
 import { StatusLamp } from "../components/StatusLamp";
 import { useEffect, useMemo, useState } from "react";
 
