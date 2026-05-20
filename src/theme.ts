@@ -1,22 +1,22 @@
 // Tanuden INTEROS Theme File
 import { createTheme, darken, lighten, ThemeOptions } from "@mui/material";
-import { blueGrey } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 
 export const GREY = {
-  50: blueGrey[50],
-  100: blueGrey[100],
-  200: blueGrey[200],
-  300: blueGrey[300],
-  400: blueGrey[400],
-  500: blueGrey[500],
-  600: blueGrey[600],
-  700: blueGrey[700],
-  800: blueGrey[800],
-  900: blueGrey[900],
-  A100: blueGrey.A100,
-  A200: blueGrey.A200,
-  A400: blueGrey.A400,
-  A700: blueGrey.A700,
+  50: grey[50],
+  100: grey[100],
+  200: grey[200],
+  300: grey[300],
+  400: grey[400],
+  500: grey[500],
+  600: grey[600],
+  700: grey[700],
+  800: grey[800],
+  900: grey[900],
+  A100: grey.A100,
+  A200: grey.A200,
+  A400: grey.A400,
+  A700: grey.A700,
 };
 
 export const PRIMARY_DARK = "#1c4778";
@@ -28,15 +28,15 @@ export const INFO_DARK = "#25caf4";
 export const INVERSED_DARK = GREY[50];
 
 export const BACKGROUND_DARK = {
-  default: "#12171c",
-  paper: GREY[800],
+  default: GREY[800],
+  paper: GREY[900],
 };
 
-export const HEADER_FONT = `system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
+export const HEADER_FONT = `"f.k_kikai_chokokuregular", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`;
 export const HEADER_FONT_WEIGHT = 600;
 export const SUBHEADER_FONT_WEIGHT = 600;
 export const SUBTITLE_FONT_WEIGHT = 300;
-export const BODY_FONT = `"BIZ UDPGothic"`;
+export const BODY_FONT = `"f.k_kikai_chokokuregular"`;
 export const SUBTITLE_LETTER_SPACING = undefined;
 
 export const MONOSPACE_FONT = "monospace";
@@ -168,9 +168,11 @@ export const getTheme = (): ThemeOptions => ({
   },
   components: {
     MuiTypography: {
-      defaultProps: {
-        lineHeight: 1.3,
-        letterSpacing: 0.5,
+      styleOverrides: {
+        root: {
+          lineHeight: 1.3,
+          letterSpacing: 0.5,
+        },
       },
     },
     MuiDialog: {

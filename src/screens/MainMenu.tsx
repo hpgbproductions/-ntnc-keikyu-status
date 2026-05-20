@@ -1,6 +1,6 @@
 import { useKumohaData } from "@tanuden/kumoha-react";
 import PageContainer from "../components/PageContainer";
-import { Paper, Stack } from "@mui/material";
+import { Stack, useTheme } from "@mui/material";
 import { StatusLamp } from "../components/StatusLamp";
 import { useEffect, useMemo, useState } from "react";
 
@@ -8,6 +8,7 @@ import {
   getDefaultIndicatorValues,
   updateIndicatorValues,
 } from "../utils/indicator-values";
+import { StatusGroup } from "../components/StatusGroup";
 
 export type CarHistoryRecord = {
   bc: number[];
@@ -84,83 +85,104 @@ export const MainMenu = () => {
     >
       <Stack
         direction="row"
-        spacing={2}
+        spacing={4}
         sx={{
-          p: 2,
+          alignItems: "center",
         }}
       >
         <Stack
-          component={Paper}
+          spacing={3}
+          direction="row"
           sx={{
-            width: "40%",
-            height: "100%",
+            borderWidth: 2,
+            border: 2,
+            borderRadius: 8,
           }}
         >
-          <StatusLamp label="受給電" color="green" active={false} />
-          <StatusLamp
-            label="マスコン-N"
-            color="green"
-            active={indicators.masconN}
-          />
-          <StatusLamp label="空転" color="green" active={false} />
-          <StatusLamp label="EB回路開放" color="green" active={false} />
-          <StatusLamp label="保護" color="green" active={false} />
-          <StatusLamp label="回生" color="green" active={indicators.regen} />
-          <StatusLamp
-            label="前照灯上向"
-            color="green"
-            active={indicators.highBeams}
-          />
+          <StatusGroup
+            outlined
+            sx={{
+              width: "250px",
+            }}
+          >
+            <StatusLamp label="受給電" color="green" active={false} />
+            <StatusLamp
+              label={<>マスコン&ndash; N</>}
+              color="green"
+              active={indicators.masconN}
+            />
+            <StatusLamp label="空転" color="green" active={false} />
+            <StatusLamp label="EB回路開放" color="green" active={false} />
+            <StatusLamp label="保護" color="green" active={false} />
+            <StatusLamp label="回生" color="green" active={indicators.regen} />
+            <StatusLamp
+              label="前照灯上向"
+              color="green"
+              active={indicators.highBeams}
+            />
+          </StatusGroup>
+          <StatusGroup
+            outlined
+            sx={{
+              width: "250px",
+            }}
+          >
+            <StatusLamp label="緊急スイッチ" color="green" active={false} />
+            <StatusLamp label="SIV無電圧" color="green" active={false} />
+            <StatusLamp
+              label={<>B &ndash; 不緩解</>}
+              color="green"
+              active={false}
+            />
+            <StatusLamp
+              label={
+                <>
+                  主差回路振地
+                  <br />
+                  差電流
+                </>
+              }
+              color="green"
+              active={false}
+              textSx={{
+                fontSize: "0.8rem",
+              }}
+            />
+            <StatusLamp
+              label="耐雪ブレーキ"
+              color="green"
+              active={indicators.snowproofBrake}
+            />
+            <StatusLamp label="非常通報" color="green" active={false} />
+            <StatusLamp
+              label="E B"
+              color="green"
+              active={indicators.emergencyBrake}
+            />
+          </StatusGroup>
         </Stack>
-        <Stack
-          component={Paper}
-          sx={{
-            width: "40%",
-            height: "100%",
-          }}
-        >
-          <StatusLamp label="緊急スイッチ" color="green" active={false} />
-          <StatusLamp label="SIV無電圧" color="green" active={false} />
-          <StatusLamp label="B-不緩解" color="green" active={false} />
-          <StatusLamp label="主差回路振地電流" color="green" active={false} />
-          <StatusLamp
-            label="耐雪ブレーキ"
-            color="green"
-            active={indicators.snowproofBrake}
-          />
-          <StatusLamp label="非常通報" color="green" active={false} />
-          <StatusLamp
-            label="E B"
-            color="green"
-            active={indicators.emergencyBrake}
-          />
-        </Stack>
-        <Stack
-          sx={{
-            height: "100%",
-          }}
-        >
-          <StatusLamp
-            label="ATS開放"
-            color="green"
-            active={false}
-            variant="vertical"
-          />
-        </Stack>
-        <Stack
-          sx={{
-            height: "100%",
-          }}
-        >
-          <StatusLamp
-            label="戸閉"
-            color="green"
-            active={indicators.doorsClosed}
-            variant="vertical"
-          />
+        <Stack direction="row" spacing={3}>
+          <StatusGroup>
+            <StatusLamp
+              label="ATS開放"
+              color="green"
+              active={false}
+              variant="vertical"
+              labelUseColor
+            />
+          </StatusGroup>
+          <StatusGroup>
+            <StatusLamp
+              label="戸閉"
+              color="green"
+              active={indicators.doorsClosed}
+              variant="vertical"
+              labelUseColor
+            />
+          </StatusGroup>
         </Stack>
       </Stack>
-      <h2>{JSON.stringify(indicators, undefined, 2)}</h2>
+      {/* <h2>{JSON.stringify(indicators, undefined, 2)}</h2> */}
     </PageContainer>
   );
 };
