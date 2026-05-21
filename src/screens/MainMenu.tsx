@@ -18,6 +18,8 @@ export type CarHistoryRecord = {
 };
 export type CarHistory = CarHistoryRecord[];
 
+const DEBUG = false;
+
 export const MainMenu = () => {
   const kumohaData = useKumohaData();
   // const kumohaUserPrefs = useKumohaThemeUserPrefs();
@@ -26,6 +28,10 @@ export const MainMenu = () => {
   const [carHistory, setCarHistory] = useState<CarHistory>([]);
 
   const indicators = useMemo(() => {
+    if (DEBUG) {
+      return getDefaultIndicatorValues(true);
+    }
+
     const inGame =
       kumohaData.gameState.screen === "MainGame" ||
       kumohaData.gameState.screen === "MainGame_Pause";
@@ -109,15 +115,22 @@ export const MainMenu = () => {
             <StatusLamp
               label={<>マスコン&ndash; N</>}
               color="yellow"
+              secondaryColor="yellow"
               active={indicators.masconN}
             />
-            <StatusLamp label="空転" color="red" active={indicators.slip} />
+            <StatusLamp
+              label="空転"
+              color="red"
+              secondaryColor="red"
+              active={indicators.slip}
+            />
             <StatusLamp label="EB回路開放" color="green" active={false} />
             <StatusLamp label="保護" color="green" active={false} />
             <StatusLamp label="回生" color="yellow" active={indicators.regen} />
             <StatusLamp
               label="前照灯上向"
               color="green"
+              secondaryColor="blue"
               active={indicators.highBeams}
             />
           </StatusGroup>
@@ -165,19 +178,18 @@ export const MainMenu = () => {
           <StatusGroup>
             <StatusLamp
               label="ATS開放"
-              color="green"
+              color="red"
               active={false}
               variant="vertical"
-              labelUseColor
             />
           </StatusGroup>
           <StatusGroup>
             <StatusLamp
               label="戸閉"
               color="green"
+              secondaryColor="blue"
               active={indicators.doorsClosed}
               variant="vertical"
-              labelUseColor
             />
           </StatusGroup>
         </Stack>

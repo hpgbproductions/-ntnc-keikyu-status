@@ -2,16 +2,16 @@ import { useKumohaInternalStore } from "@tanuden/kumoha-react";
 import { CarHistory } from "../screens/MainMenu";
 import { CarState, Direction, Lamps, Switches } from "opentetsu";
 
-export function getDefaultIndicatorValues() {
+export function getDefaultIndicatorValues(forceIllumination?: boolean) {
   const indicatorValues = {
-    masconN: false,
-    slip: false,
-    regen: false,
-    highBeams: false,
-    brakeNotReleased: false,
-    snowproofBrake: false,
-    emergencyBrake: false,
-    doorsClosed: false,
+    masconN: forceIllumination ? true : false,
+    slip: forceIllumination ? true : false,
+    regen: forceIllumination ? true : false,
+    highBeams: forceIllumination ? true : false,
+    brakeNotReleased: forceIllumination ? true : false,
+    snowproofBrake: forceIllumination ? true : false,
+    emergencyBrake: forceIllumination ? true : false,
+    doorsClosed: forceIllumination ? true : false,
   };
 
   return indicatorValues;
@@ -133,7 +133,7 @@ export function updateIndicatorValues({
       const currentVariation =
         Math.max(...currentHistory[car]) - Math.min(...currentHistory[car]);
 
-      const slip = currentVariation > currentVariationThreshold
+      const slip = currentVariation > currentVariationThreshold;
       if (slip) {
         indicatorValues.slip = slip;
         break;

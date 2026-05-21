@@ -1,9 +1,19 @@
-import { Box, Stack, SxProps, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  darken,
+  Stack,
+  SxProps,
+  Theme,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { ReactNode, useMemo } from "react";
 
 export const StatusLampCircle = ({
+  active,
   currentColor,
 }: {
+  active: boolean;
   currentColor: string;
 }) => {
   return (
@@ -13,42 +23,87 @@ export const StatusLampCircle = ({
         height: 16,
         borderRadius: 9999,
         backgroundColor: currentColor,
+
+        transition: "background-color 0.1s ease, box-shadow 0.1s ease",
+
+        boxShadow: active
+          ? `0 0 5px ${currentColor}, 0 0 10px ${currentColor}`
+          : undefined,
       }}
     />
   );
 };
 
+type StatusLampColor = "green" | "red" | "yellow" | "blue" | "white";
+
+const getColor = ({
+  active,
+  text,
+  color,
+  theme,
+}: {
+  active: boolean;
+  text: boolean;
+  color: StatusLampColor | undefined;
+  theme: Theme;
+}) => {
+  if (!active) {
+    // return text ? "common.white" : "grey.800";
+    return text
+      ? theme.palette.grey[400]
+      : darken(theme.palette.grey[800], 0.3);
+  }
+  if (color === "white") {
+    return theme.palette.common.white;
+  }
+  if (color === "green") {
+    return theme.palette.success.main;
+  }
+  if (color === "red") {
+    return theme.palette.error.main;
+  }
+  if (color === "yellow") {
+    return theme.palette.warning.main;
+  }
+  if (color === "blue") {
+    return theme.palette.info.main;
+  }
+  return theme.palette.common.white;
+};
+
 export const StatusLamp = ({
   label,
   color,
+  secondaryColor = "white",
   active,
   variant = "horizontal",
-  labelUseColor,
   textSx,
 }: {
   label: string | ReactNode;
-  color: "green" | "red" | "yellow";
+  color?: StatusLampColor;
+  secondaryColor?: StatusLampColor;
   active: boolean;
   variant?: "horizontal" | "vertical";
-  labelUseColor?: boolean;
   textSx?: SxProps;
 }) => {
   const theme = useTheme();
+
   const currentColor = useMemo(() => {
-    if (!active) {
-      return "grey.800";
-    }
-    if (color === "green") {
-      return "success.main";
-    }
-    if (color === "red") {
-      return "error.main";
-    }
-    if (color === "yellow") {
-      return "warning.main";
-    }
-    return "grey.800";
-  }, [active, color]);
+    return getColor({
+      active,
+      text: false,
+      color,
+      theme,
+    });
+  }, [active, color, theme]);
+  const currentSecondaryColor = useMemo(() => {
+    return getColor({
+      active,
+      text: true,
+      color: secondaryColor,
+      theme,
+    });
+  }, [active, secondaryColor, theme]);
 
   return (
     <Stack
@@ -66,8 +121,8 @@ export const StatusLamp = ({
       <Stack>
         {variant === "horizontal" ? (
           <Stack spacing={1.5}>
-            <StatusLampCircle currentColor={currentColor} />
-            <StatusLampCircle currentColor={currentColor} />
+            <StatusLampCircle currentColor={currentColor} active={active} />
+            <StatusLampCircle currentColor={currentColor} active={active} />
           </Stack>
         ) : (
           <>
@@ -76,6 +131,10 @@ export const StatusLamp = ({
                 width: "40px",
                 height: "15px",
                 backgroundColor: currentColor,
+                transition: "background-color 0.1s ease, box-shadow 0.1s ease",
+                boxShadow: active
+                  ? `0 0 5px ${currentColor}, 0 0 10px ${currentColor}`
+                  : undefined,
               }}
             />
           </>
@@ -100,7 +159,12 @@ export const StatusLamp = ({
             height: variant === "vertical" ? "170px" : "auto",
 
             textAlignLast: "justify",
-            color: labelUseColor ? currentColor : "common.white",
+            color: secondaryColor ? currentSecondaryColor : currentColor,
+
+            transition: "color 0.1s ease, text-shadow 0.1s ease",
+            textShadow: active
+              ? `0 0 8px ${secondaryColor ? currentSecondaryColor : currentColor}`
+              : undefined,
           }}
         >
           {label}
