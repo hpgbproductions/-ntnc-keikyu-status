@@ -108,13 +108,13 @@ export const MainMenu = () => {
             <StatusLamp label="受給電" color="green" active={false} />
             <StatusLamp
               label={<>マスコン&ndash; N</>}
-              color="green"
+              color="yellow"
               active={indicators.masconN}
             />
-            <StatusLamp label="空転" color="green" active={false} />
+            <StatusLamp label="空転" color="red" active={indicators.slip} />
             <StatusLamp label="EB回路開放" color="green" active={false} />
             <StatusLamp label="保護" color="green" active={false} />
-            <StatusLamp label="回生" color="green" active={indicators.regen} />
+            <StatusLamp label="回生" color="yellow" active={indicators.regen} />
             <StatusLamp
               label="前照灯上向"
               color="green"
@@ -131,13 +131,13 @@ export const MainMenu = () => {
             <StatusLamp label="SIV無電圧" color="green" active={false} />
             <StatusLamp
               label={<>B &ndash; 不緩解</>}
-              color="green"
-              active={false}
+              color="red"
+              active={indicators.brakeNotReleased}
             />
             <StatusLamp
               label={
                 <>
-                  主差回路振地
+                  主回路接地
                   <br />
                   差電流
                 </>
@@ -150,13 +150,13 @@ export const MainMenu = () => {
             />
             <StatusLamp
               label="耐雪ブレーキ"
-              color="green"
+              color="yellow"
               active={indicators.snowproofBrake}
             />
             <StatusLamp label="非常通報" color="green" active={false} />
             <StatusLamp
               label="E B"
-              color="green"
+              color="red"
               active={indicators.emergencyBrake}
             />
           </StatusGroup>

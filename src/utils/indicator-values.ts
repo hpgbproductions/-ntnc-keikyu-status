@@ -8,6 +8,7 @@ export function getDefaultIndicatorValues() {
     slip: false,
     regen: false,
     highBeams: false,
+    brakeNotReleased: false,
     snowproofBrake: false,
     emergencyBrake: false,
     doorsClosed: false,
@@ -37,7 +38,7 @@ export function updateIndicatorValues({
   direction,
   cars,
   pNotch,
-  // bNotch,
+  bNotch,
   combinedNotch,
   switches,
   lamps,
@@ -116,30 +117,23 @@ export function updateIndicatorValues({
   // When there is a constant large input, check for spikes
   // Ignore during changing input as those cause variation as well
   const largeInput =
-    Math.min(...pNotchHistory) >= 3 || Math.min(...bNotchHistory) >= 3;
+    Math.min(...pNotchHistory) >= 4 || Math.min(...bNotchHistory) >= 4;
   const constantInput =
     Math.min(...pNotchHistory) === Math.max(...pNotchHistory) &&
     Math.min(...bNotchHistory) === Math.max(...bNotchHistory);
 
   if (largeInput && constantInput) {
     // Assume slip if the per-car history fluctuates by these amounts.
-    // Current variation is very small in normal acceleration (<5) except for 3000 series.
-    // BC variation can be forced large by changing brake amount sharply. E.g., ~233 using EB on 4300/5300 series.
-    // Realistically the BC threhold should never be hit due to Tatehama brake programming.
+    // Current variation is very small in normal acceleration (<5)
+    // except for powering after notch delay and switching resistors on 3000 series
+    // BC not checked as BC-cut ABS not observed on Tatehama (but it can tighten in response to lock-up of regen brake)
     const currentVariationThreshold = 250;
-    const bcVariationThreshold = 250;
 
     for (let car = 0; car < cars.length; car++) {
       const currentVariation =
         Math.max(...currentHistory[car]) - Math.min(...currentHistory[car]);
-      const bcVariation =
-        Math.max(...bcHistory[car]) - Math.min(...bcHistory[car]);
 
-      console.log(car, currentVariation, bcVariation);
-
-      const slip =
-        currentVariation > currentVariationThreshold ||
-        bcVariation > bcVariationThreshold;
+      const slip = currentVariation > currentVariationThreshold
       if (slip) {
         indicatorValues.slip = slip;
         break;
@@ -149,11 +143,14 @@ export function updateIndicatorValues({
     indicatorValues.slip = false;
   }
 
+  // brakeNotReleased
+  indicatorValues.brakeNotReleased = pNotch > 0 && bNotch > 0;
+
   // snowproofBrake
-  // If brake input is on, or brakes are forced, don't change value
+  // Turned off if brake input is on, or brakes are forced
   // Otherwise check for constant 40kPa (hacky)
   const brakeInUse =
-    Math.min(...bNotchHistory) > 0 ||
+    Math.min(...bNotchHistory) > (leadCar.twoHandle ? 0 : 1) ||
     lamps.ats.brakeApplication ||
     lamps.eBrake;
   if (!brakeInUse) {
