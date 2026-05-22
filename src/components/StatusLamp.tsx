@@ -50,7 +50,7 @@ const getColor = ({
   if (!active) {
     // return text ? "common.white" : "grey.800";
     return text
-      ? theme.palette.grey[400]
+      ? theme.palette.grey[300]
       : darken(theme.palette.grey[800], 0.3);
   }
   if (color === "white") {
@@ -68,7 +68,7 @@ const getColor = ({
   if (color === "blue") {
     return theme.palette.info.main;
   }
-  return theme.palette.common.white;
+  return theme.palette.grey[300];
 };
 
 export const StatusLamp = ({
