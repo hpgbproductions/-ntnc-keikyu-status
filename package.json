@@ -16,8 +16,26 @@
   ],
   "kumohaConfig": {
     "configuration": {
-      "categories": {},
-      "properties": {}
+      "categories": {
+        "style": {
+          "label": "スタイル"
+        }
+      },
+      "properties": {
+        "style.lightUpType": {
+          "type": "string",
+          "label": "灯タイプ",
+          "default": "sideLamps",
+          "enum": [
+            "sideLamps",
+            "text"
+          ],
+          "enumLabels": [
+            "形",
+            "字"
+          ]
+        }
+      }
     },
     "preview": [
       "preview/image0.png",

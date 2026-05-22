@@ -77,6 +77,7 @@ export const StatusLamp = ({
   secondaryColor = "white",
   active,
   variant = "horizontal",
+  lightType,
   textSx,
 }: {
   label: string | ReactNode;
@@ -84,10 +85,12 @@ export const StatusLamp = ({
   secondaryColor?: StatusLampColor;
   active: boolean;
   variant?: "horizontal" | "vertical";
+  lightType?: "shape" | "text";
   textSx?: SxProps;
 }) => {
   const theme = useTheme();
 
+  // color of the shapes
   const currentColor = useMemo(() => {
     return getColor({
       active,
@@ -96,14 +99,16 @@ export const StatusLamp = ({
       theme,
     });
   }, [active, color, theme]);
+
+  // color of the text
   const currentSecondaryColor = useMemo(() => {
     return getColor({
-      active,
-      text: true,
+      active: lightType === "text" ? active : false,
+      text: lightType === "text" ? false : true,
       color: secondaryColor,
       theme,
     });
-  }, [active, secondaryColor, theme]);
+  }, [active, lightType, secondaryColor, theme]);
 
   return (
     <Stack
@@ -118,28 +123,30 @@ export const StatusLamp = ({
         color: currentColor,
       }}
     >
-      <Stack>
-        {variant === "horizontal" ? (
-          <Stack spacing={1.5}>
-            <StatusLampCircle currentColor={currentColor} active={active} />
-            <StatusLampCircle currentColor={currentColor} active={active} />
+      {lightType === "shape" ? (
+        <Stack>
+          {variant === "horizontal" ? (
+            <Stack spacing={1.5}>
+              <StatusLampCircle currentColor={currentColor} active={active} />
+              <StatusLampCircle currentColor={currentColor} active={active} />
+            </Stack>
+          ) : (
+            <>
+              <Box
+                sx={{
+                  width: "40px",
+                  height: "15px",
+                  backgroundColor: currentColor,
+                  transition: "background-color 0.1s ease, box-shadow 0.1s ease",
+                  boxShadow: active
+                    ? `0 0 5px ${currentColor}, 0 0 10px ${currentColor}`
+                    : undefined,
+                }}
+              />
+            </>
+          )}
           </Stack>
-        ) : (
-          <>
-            <Box
-              sx={{
-                width: "40px",
-                height: "15px",
-                backgroundColor: currentColor,
-                transition: "background-color 0.1s ease, box-shadow 0.1s ease",
-                boxShadow: active
-                  ? `0 0 5px ${currentColor}, 0 0 10px ${currentColor}`
-                  : undefined,
-              }}
-            />
-          </>
-        )}
-      </Stack>
+        ) : undefined}
       <Box
         sx={{
           flexGrow: 1,
@@ -152,18 +159,17 @@ export const StatusLamp = ({
             fontWeight: 400,
             writingMode: variant === "vertical" ? "vertical-lr" : undefined,
             textOrientation: variant === "vertical" ? "upright" : undefined,
-
+            
             textAlign: "justify",
-            // textJustify: variant === "vertical" ? "distribute" : undefined,
+            textAlignLast: "justify",
 
             height: variant === "vertical" ? "170px" : "auto",
 
-            textAlignLast: "justify",
             color: secondaryColor ? currentSecondaryColor : currentColor,
 
             transition: "color 0.1s ease, text-shadow 0.1s ease",
             textShadow:
-              active && secondaryColor !== "white"
+              active && lightType === "text"
                 ? `0 0 8px ${secondaryColor ? currentSecondaryColor : currentColor}`
                 : undefined,
           }}
