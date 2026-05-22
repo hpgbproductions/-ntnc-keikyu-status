@@ -54,7 +54,7 @@ const getColor = ({
       : darken(theme.palette.grey[800], 0.3);
   }
   if (color === "white") {
-    return theme.palette.common.white;
+    return theme.palette.grey[300];
   }
   if (color === "green") {
     return theme.palette.success.main;
@@ -163,7 +163,7 @@ export const StatusLamp = ({
 
             transition: "color 0.1s ease, text-shadow 0.1s ease",
             textShadow:
-              active && secondaryColor
+              active && secondaryColor !== "white"
                 ? `0 0 8px ${secondaryColor ? currentSecondaryColor : currentColor}`
                 : undefined,
           }}
