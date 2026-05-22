@@ -162,9 +162,10 @@ export const StatusLamp = ({
             color: secondaryColor ? currentSecondaryColor : currentColor,
 
             transition: "color 0.1s ease, text-shadow 0.1s ease",
-            textShadow: active
-              ? `0 0 8px ${secondaryColor ? currentSecondaryColor : currentColor}`
-              : undefined,
+            textShadow:
+              active && secondaryColor
+                ? `0 0 8px ${secondaryColor ? currentSecondaryColor : currentColor}`
+                : undefined,
           }}
         >
           {label}
