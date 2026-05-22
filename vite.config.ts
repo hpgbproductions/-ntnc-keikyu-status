@@ -18,6 +18,7 @@ export default defineConfig({
       hook: "writeBundle",
       verbose: true,
       targets: [
+        { src: "./LICENSE", dest: outPath },
         { src: "./package.json", dest: outPath },
         { src: "./README.md", dest: outPath },
         { src: "./preview/", dest: outPath },

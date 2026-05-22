@@ -2,7 +2,8 @@
   "name": "@hpgbproductions/kk-status",
   "displayName": "KKステータス",
   "description": "(description)",
-  "version": "1.0",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
   "author": {
     "name": "nataniachan (hpgbproductions)",
     "url": "https://x.com/hpgbproductions"
@@ -15,67 +16,18 @@
   ],
   "kumohaConfig": {
     "configuration": {
-      "categories": {
-        "example": {
-          "label": "サンプル設定"
-        },
-        "example.hito": {
-          "label": "例の１"
-        },
-        "example.futa": {
-          "label": "例の２"
-        }
-      },
-      "properties": {
-        "example.hito.ichi": {
-          "type": "string",
-          "label": "設定1",
-          "description": "メニューから選択してください",
-          "default": "niban",
-          "enum": [
-            "ichiban",
-            "niban",
-            "sanban"
-          ],
-          "enumLabels": [
-            "一番",
-            "二番",
-            "三番"
-          ]
-        },
-        "example.hito.ni": {
-          "type": "string",
-          "label": "設定2",
-          "description": "好きな動物を選択してください",
-          "default": "tanuki1",
-          "enum": [
-            "tanuki1",
-            "tanuki2",
-            "tanuki3",
-            "tanuki-only"
-          ],
-          "enumLabels": [
-            "タヌキ",
-            "たぬき",
-            "狸",
-            "たぬきがすきですよね？タ・ヌ・キだけ"
-          ]
-        },
-        "example.futa.ichi": {
-          "type": "boolean",
-          "label": "設定3",
-          "default": false
-        }
-      }
+      "categories": {},
+      "properties": {}
     },
     "preview": [
-      "preview/base-theme.png"
+      "preview/image0.png",
+      "preview/image1.png"
     ]
   },
   "private": true,
   "type": "module",
   "engines": {
-    "tanuden-desktop-hakata": "^4.2.0"
+    "tanuden-desktop-hakata": "^4.2.21"
   },
   "scripts": {
     "dev": "vite --host --port 5800",
