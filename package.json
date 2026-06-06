@@ -18,21 +18,21 @@
     "configuration": {
       "categories": {
         "style": {
-          "label": "スタイル"
+          "label": "外観"
         }
       },
       "properties": {
         "style.lightUpType": {
           "type": "string",
-          "label": "灯タイプ",
-          "default": "sideLamps",
+          "label": "表示スタイル",
+          "default": "shape",
           "enum": [
-            "sideLamps",
+            "shape",
             "text"
           ],
           "enumLabels": [
-            "形",
-            "字"
+            "表示灯",
+            "文字"
           ]
         }
       }

@@ -25,15 +25,14 @@ const OVERRIDE_LIGHT_TYPE = "text";
 export const MainMenu = () => {
   const kumohaData = useKumohaData();
   const kumohaUserPrefs = useKumohaThemeUserPrefs();
-  // const kumohaROM = useKumohaROM();
 
   const settingLightType = useMemo(() => {
     if (DEBUG) {
       return OVERRIDE_LIGHT_TYPE;
     } else {
-      return kumohaUserPrefs.style.lightUpType;
+      return kumohaUserPrefs["style.lightUpType"];
     }
-  }, [kumohaUserPrefs])
+  }, [kumohaUserPrefs]);
 
   const [carHistory, setCarHistory] = useState<CarHistory>([]);
 
@@ -121,7 +120,12 @@ export const MainMenu = () => {
               width: "250px",
             }}
           >
-            <StatusLamp label="受給電" color="green" active={false} lightType={settingLightType} />
+            <StatusLamp
+              label="受給電"
+              color="green"
+              active={false}
+              lightType={settingLightType}
+            />
             <StatusLamp
               label={<>マスコン&ndash; N</>}
               color="yellow"
@@ -136,8 +140,18 @@ export const MainMenu = () => {
               active={indicators.slip}
               lightType={settingLightType}
             />
-            <StatusLamp label="EB回路開放" color="green" active={false} lightType={settingLightType} />
-            <StatusLamp label="保護" color="green" active={false} lightType={settingLightType} />
+            <StatusLamp
+              label="EB回路開放"
+              color="green"
+              active={false}
+              lightType={settingLightType}
+            />
+            <StatusLamp
+              label="保護"
+              color="green"
+              active={false}
+              lightType={settingLightType}
+            />
             <StatusLamp
               label="回生"
               color="yellow"
@@ -159,8 +173,18 @@ export const MainMenu = () => {
               width: "250px",
             }}
           >
-            <StatusLamp label="緊急スイッチ" color="green" active={false} lightType={settingLightType} />
-            <StatusLamp label="SIV無電圧" color="green" active={false} lightType={settingLightType} />
+            <StatusLamp
+              label="緊急スイッチ"
+              color="green"
+              active={false}
+              lightType={settingLightType}
+            />
+            <StatusLamp
+              label="SIV無電圧"
+              color="green"
+              active={false}
+              lightType={settingLightType}
+            />
             <StatusLamp
               label={<>B &ndash; 不緩解</>}
               color="red"
@@ -190,7 +214,12 @@ export const MainMenu = () => {
               active={indicators.snowproofBrake}
               lightType={settingLightType}
             />
-            <StatusLamp label="非常通報" color="green" active={false} lightType={settingLightType} />
+            <StatusLamp
+              label="非常通報"
+              color="green"
+              active={false}
+              lightType={settingLightType}
+            />
             <StatusLamp
               label="E B"
               color="red"
