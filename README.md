@@ -1,85 +1,46 @@
-# タヌ電開発用ベーステーマ（tanuden-theme-base）
-[タヌ電TIMS](https://myuntendai.tanuden.tanu.ch)で使用する[クモハ](https://github.com/haruyukitanuki/kumoha)テーマの開発を始めるためのボイラープレートテンプレートです。
+# KK Dentetsu Status Panel (kk-status)
 
-クモハテーマエンジンと連携・接続するためのスターターコードが含まれています。
+This is a theme that replicates the indicator light panels found on many trains run by KK Corporation.
 
-Reactプロジェクトとして構築されているため、ある程度のWeb開発の知識が必要です。
+## Installation
 
-➡️ このテンプレートのリポジトリ： https://github.com/haruyukitanuki/tanuden-theme-base
+1. Find the theme installation folder using Tanuden Console. (Monitor Launcher > Open themes folder)
+2. Download the ZIP file and extract it.
+3. Ensure that the folder `@hpgbproductions~kk-status` is produced. When this folder is opened, the file `index.html` should be immediately visible.
+4. Copy the `@hpgbproductions~kk-status` folder (not ZIP file) to the theme folder in Step 1.
 
-## ℹ️ クモハテーマエンジンについて
-* [クモハ](https://github.com/haruyukitanuki/kumoha)
-* [クモハ for React](https://github.com/haruyukitanuki/kumoha-react)
+## Settings
 
-## ⭐ はじめに
-このテンプレートには、[Material UI](https://mui.com) (MUI)があらかじめインストールされています。必要に応じて削除することも、そのまま参考として使うことも可能です。
+Two style variations are available in the Settings menu at the bottom of the Monitor Launcher in the Tanuden Console. The options are:
 
-MUIを削除する場合は、MUI固有のコードをリファクタリングする必要があります。
-もし削除を進める場合は、[新しく空のプロジェクトを作成](https://ja.vite.dev/guide/#%E6%9C%80%E5%88%9D%E3%81%AE-vite-%E3%83%95%E3%82%9A%E3%83%AD%E3%82%B7%E3%82%99%E3%82%A7%E3%82%AF%E3%83%88%E3%82%92%E7%94%9F%E6%88%90%E3%81%99%E3%82%8B)し、[クモハの実装を一からやり直す](https://github.com/haruyukitanuki/kumoha-react/blob/main/README-ja.md#%EF%B8%8F-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95)方法をおすすめします。その方が作業がもっと簡単です。
+| Name | Description |
+|:---:|:---|
+|表示灯 `shape`|The circular or rectangular lamps next to the text will light up. ![](preview/image0.png)
+|文字 `text`|The text labels light up. ![](preview/image1.png)
 
-## 開発環境のセットアップ
-#### 1. 依存関係をインストール
+## Indicators
 
-```bash
-npm install -D
-```
+Eight indicators on the panel are supported.
 
-#### 2. 起動
-```bash
-npm run dev
-```
+| JA | Description |
+|:---:|:---|
+|マスコン &ndash; N|Mascon (for one-handle trains) or power lever (for two-handle trains) in neutral position|
+|空転|Wheel slip\*|
+|回生|Regenerative brake|
+|前照灯上向|Headlight high beams|
+|B &ndash; 不緩解|Brakes are not released when power is applied|
+|耐雪ブレーキ|Snowproof brake (only when brakes are off)\*|
+|E B|Emergency brake|
+|戸閉|All doors closed|
 
-#### 3. ブラウザでウェブアプリにアクセス
-`http://localhost:5800/`
+> [!NOTE]
+> (\*) This event had to be guessed as it was not supported by the TrainCrew API at the time of development. False positives may be indicated. We apologize for the inconvenience.
 
-## Linting
+> [!WARNING]
+> Usage of each indicator differs from that of real-world companies. Please do not send enquiries about this software to any railway companies or manufacturers.
 
-```bash
-npm run lint
-```
+## Developers
 
-## ビルド・配布
-テーマの開発が完了したら、ビルドしてパッケージ化し、他の人に配布することができます。
-以下のコマンドを実行すると、プロジェクトのルートにある`dist`フォルダ内に、テーマ名の`.zip`ファイルが作成されます。
+[nataniachan (hpgbproductions)](https://x.com/hpgbproductions) - indicator logic and layout planning
 
-```bash
-npm run build
-```
-
-コマンドが作成された`.zip`ファイルをユーザーに配布してください。
-
-### コンソールにテーマインストール方法
-> [!NOTE] 
-> 下の説明はユーザー向けです。
-> 以下の文は、あなたが作業しやすいように書かれています。
-> 
-> 自分の作成したテーマを配布する際は、ユーザーがインストール方法を理解できるように、同様の説明を含めることをおすすめします。
-> 
-> 必要に応じて、内容は自由に書き換えてください。
-
-```md
-1. テーマのZIPファイルをダウンロードしてください。
-2. コンソールで「モニターテーマ」ページを開き、「テーマフォルダを開く」 をクリックします。
-3. ダウンロードしたZIPを解凍し、そのフォルダを先ほど開いたディレクトリに置きます。
-4. 「再読み込み」をクリックすると、テーマが画面に表示されます。表示されれば、正しくインストールされています。
-5. 同じ画面でテーマをクリックして、右上に「有効にする」ボタンを押してください。
-6. 完了！
-
-テーマが表示されない場合は、ZIPを解凍した際にテーマフォルダがサブディレクトリに入っていないか確認してください。解凍後すぐに「index.html」などのファイルが見える状態になっている必要があります。
-```
-
-## ❓ 困ったときは
-もし何か分からないことがあれば、気軽に[Discordサーバー](https://go.tanu.ch/tanuden-discord)に参加してください。
-
-## 💾 タヌ電OSS
-このプロジェクトはApache License 2.0のもとでライセンスされています。
-詳細についてはLICENSEファイルをご覧ください。
-
-> [!IMPORTANT] 
-> このリポジトリには、狸河電鉄が所有するプロジェクト、製品、またはサービスの商標やロゴが含まれている場合があります。無断使用は禁止されています。
-
----
-
-[タヌ電 Discordサーバー](https://go.tanu.ch/tanuden-discord) | [Twitter](https://go.tanu.ch/twitter) | [YouTube](https://go.tanu.ch/tanutube)
-
-**狸河電鉄作品｜Copyright &copy; 2025 Haruyuki Tanukiji.**
+[Haruyuki Tanukiji](https://go.tanu.ch/twitter) - layout development and React integration
