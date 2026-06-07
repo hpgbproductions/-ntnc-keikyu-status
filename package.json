@@ -1,7 +1,7 @@
 {
   "name": "@hpgbproductions/kk-status",
   "displayName": "KKステータス",
-  "description": "(description)",
+  "description": "KK電鉄ぽい表示パネル",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "author": {
